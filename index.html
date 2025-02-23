@@ -3,14 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flappy Bird</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Planet Clicker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="game">
-        <div id="bird"></div>
-        <div id="score">0</div>
+    <div id="game-container">
+        <h1 id="energy-counter">0 ENERGY</h1>
+        <div id="planet-container">
+            <img id="planet" src="earth.png" alt="Planet">
+        </div>
+        <button id="upgrade-btn">Upgrade (100 Energy)</button>
+        <button id="next-planet-btn">Next Planet (1 Million Energy)</button>
+        <button id="leaderboard-btn">Leaderboard</button>
+        <button id="info-btn">Spielregeln</button>
+        
+        <div id="leaderboard" class="hidden">
+            <h2>Leaderboard</h2>
+            <ul id="leaderboard-list"></ul>
+        </div>
+        
+        <div id="info" class="hidden">
+            <h2>Spielregeln</h2>
+            <p>Klicke auf den Planeten, um Energie zu sammeln...</p>
+        </div>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

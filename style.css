@@ -1,76 +1,236 @@
-body {
-    background-color: black;
-    color: white;
-    font-family: 'Press Start 2P', cursive;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+/* Grundlegende Stileinstellungen */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+body {
+  background: radial-gradient(ellipse at center, #111 0%, #000 100%);
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Container für das gesamte Spiel */
 #game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 20px;
+}
+
+/* Header mit Energieanzeige */
+#header {
+  margin-bottom: 20px;
 }
 
 #energy-counter {
-    font-size: 24px;
-    margin-bottom: 20px;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+/* Hauptinhalt: Planet und Steuerung */
+#main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Planet-Anzeige */
+#planet-section {
+  margin-bottom: 20px;
 }
 
 #planet-container {
-    width: 300px;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+  width: 300px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.1);
 }
 
 #planet {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    transition: transform 0.1s ease-in-out;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out, filter 0.3s ease-in-out;
+}
+
+#planet:hover {
+  filter: brightness(1.2);
 }
 
 #planet:active {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
-button {
-    background-color: transparent;
-    border: 2px solid white;
-    color: white;
-    font-size: 16px;
-    padding: 10px;
-    margin: 10px;
-    cursor: pointer;
-    font-family: 'Press Start 2P', cursive;
+/* Steuerungspanel */
+#control-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-button:hover {
-    background-color: white;
-    color: black;
+#control-panel button {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+#control-panel button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Allgemeine Panel-Stile (Shop, Leaderboard, Info) */
+aside {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  max-width: 90%;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 20px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
-#leaderboard, #info {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 20px;
-    border: 2px solid white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+/* Panel Header und Footer */
+.panel-header, .panel-footer {
+  margin-bottom: 10px;
+}
+
+.panel-header h2 {
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.panel-footer button {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.panel-footer button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Upgrades-Container */
+#upgrades-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+
+#upgrades-container button {
+  background: #222;
+  border: 2px solid #fff;
+  padding: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#upgrades-container button:hover {
+  background: #444;
+  transform: scale(1.02);
+}
+
+/* Leaderboard Liste */
+#leaderboard-content {
+  max-height: 250px;
+  overflow-y: auto;
+  border-top: 1px solid #fff;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+#leaderboard-list {
+  list-style: none;
+  text-align: left;
+}
+
+#leaderboard-list li {
+  padding: 4px 0;
+  border-bottom: 1px solid #444;
+  font-size: 12px;
+}
+
+/* Regeln-Text */
+#rules-content {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* Animationen */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
     transform: translate(-50%, -50%);
-    width: 300px;
-    text-align: center;
+  }
 }
 
+/* Zusätzliche Effekte für Buttons */
+button:focus {
+  outline: none;
+  box-shadow: 0 0 10px 2px #fff;
+}
+
+/* Media Query für kleinere Bildschirme */
+@media (max-width: 480px) {
+  #planet-container {
+    width: 240px;
+    height: 240px;
+  }
+  #energy-counter {
+    font-size: 20px;
+  }
+  #control-panel button {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}
+
+/* Zusätzliche dekorative Effekte und Details */
+body::before {
+  content: '';\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background: url('stars.png') repeat;\n  opacity: 0.2;\n  z-index: -1;\n}
+
+#game-container::after {\n  content: '';\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 50px;\n  background: linear-gradient(to top, #000, transparent);\n  z-index: 1;\n}
+
+/* Zusätzliche Stile für Smooth-Scrolling in den Panels */
+aside::-webkit-scrollbar {\n  width: 8px;\n}\n\naside::-webkit-scrollbar-track {\n  background: #222;\n  border-radius: 4px;\n}\n\naside::-webkit-scrollbar-thumb {\n  background: #555;\n  border-radius: 4px;\n}\n\n/* Ende CSS-Styles */  

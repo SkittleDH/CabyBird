@@ -1,52 +1,81 @@
-const bird = document.getElementById('bird');
-const game = document.getElementById('game');
-const scoreDisplay = document.getElementById('score');
-let birdY = 250;
-let gravity = 2;
-let score = 0;
-let isGameOver = false;
+let energy = 0;
+let upgradeCost = 100;
+let energyPerClick = 1;
+let nextPlanetCost = 1000000;
+let currentPlanet = "earth";
+let planets = {
+    earth: { name: "Earth", unlocked: true, energyMultiplier: 1 },
+    mars: { name: "Mars", unlocked: false, energyMultiplier: 2 }
+};
 
-document.addEventListener('keydown', () => {
-    if (!isGameOver) {
-        birdY -= 40;
-        bird.style.top = birdY + 'px';
+const energyCounter = document.getElementById("energy-counter");
+const planetImage = document.getElementById("planet");
+const upgradeBtn = document.getElementById("upgrade-btn");
+const nextPlanetBtn = document.getElementById("next-planet-btn");
+const leaderboardBtn = document.getElementById("leaderboard-btn");
+const infoBtn = document.getElementById("info-btn");
+const leaderboardDiv = document.getElementById("leaderboard");
+const infoDiv = document.getElementById("info");
+const leaderboardList = document.getElementById("leaderboard-list");
+
+// Energie beim Klicken auf den Planeten erhalten
+planetImage.addEventListener("click", () => {
+    energy += energyPerClick * planets[currentPlanet].energyMultiplier;
+    updateEnergyCounter();
+});
+
+// Upgrade kaufen
+upgradeBtn.addEventListener("click", () => {
+    if (energy >= upgradeCost) {
+        energy -= upgradeCost;
+        energyPerClick *= 2;
+        upgradeCost *= 2;
+        upgradeBtn.textContent = `Upgrade (${upgradeCost} Energy)`;
+        updateEnergyCounter();
     }
 });
 
-function createPipe() {
-    const pipe = document.createElement('div');
-    pipe.classList.add('pipe');
-    const pipeHeight = Math.random() * 200 + 100;
-    pipe.style.height = pipeHeight + 'px';
-    pipe.style.left = '400px';
-    game.appendChild(pipe);
+// Nächsten Planeten kaufen
+nextPlanetBtn.addEventListener("click", () => {
+    if (energy >= nextPlanetCost && !planets.mars.unlocked) {
+        energy -= nextPlanetCost;
+        planets.mars.unlocked = true;
+        currentPlanet = "mars";
+        planetImage.src = "mars.png";
+        nextPlanetBtn.style.display = "none";
+        updateEnergyCounter();
+    }
+});
 
-    let pipeInterval = setInterval(() => {
-        if (isGameOver) {
-            clearInterval(pipeInterval);
-            return;
-        }
-        let pipeLeft = parseInt(pipe.style.left);
-        if (pipeLeft < -50) {
-            clearInterval(pipeInterval);
-            game.removeChild(pipe);
-            score++;
-            scoreDisplay.innerText = score;
-        } else {
-            pipe.style.left = pipeLeft - 5 + 'px';
-        }
-    }, 20);
+// Leaderboard anzeigen
+leaderboardBtn.addEventListener("click", () => {
+    leaderboardDiv.classList.toggle("hidden");
+    updateLeaderboard();
+});
+
+// Infoseite anzeigen
+infoBtn.addEventListener("click", () => {
+    infoDiv.classList.toggle("hidden");
+});
+
+// Energieanzeige aktualisieren
+function updateEnergyCounter() {
+    energyCounter.textContent = `${energy} ENERGY`;
+    localStorage.setItem("energy", energy);
 }
 
-function startGame() {
-    setInterval(() => {
-        if (!isGameOver) {
-            birdY += gravity;
-            bird.style.top = birdY + 'px';
-        }
-    }, 20);
-    
-    setInterval(createPipe, 2000);
+// Leaderboard aktualisieren
+function updateLeaderboard() {
+    let scores = JSON.parse(localStorage.getItem("leaderboard")) || [];
+    scores.push({ name: "Player", score: energy });
+    scores.sort((a, b) => b.score - a.score);
+    scores = scores.slice(0, 10);
+    localStorage.setItem("leaderboard", JSON.stringify(scores));
+    leaderboardList.innerHTML = scores.map(s => `<li>${s.name}: ${s.score} Energy</li>`).join("");
 }
 
-startGame();
+// Spielstand laden
+window.onload = () => {
+    energy = parseInt(localStorage.getItem("energy")) || 0;
+    updateEnergyCounter();
+};

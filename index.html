@@ -1,33 +1,84 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planet Clicker</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galactic Clicker</title>
+  <!-- Externe Schriftart laden (optional, z. B. Press Start 2P) -->
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
-    <div id="game-container">
-        <h1 id="energy-counter">0 ENERGY</h1>
+  <div id="game-container">
+    <!-- Header-Bereich: Energiezähler -->
+    <header id="header">
+      <h1 id="energy-counter">0 ENERGY</h1>
+    </header>
+
+    <!-- Hauptbereich: Planet und Steuerungselemente -->
+    <main id="main-content">
+      <!-- Planet-Display -->
+      <section id="planet-section">
         <div id="planet-container">
-            <img id="planet" src="earth.png" alt="Planet">
+          <img id="planet" src="earth.png" alt="Aktueller Planet" onclick="collectEnergy()">
         </div>
-        <button id="upgrade-btn">Upgrade (100 Energy)</button>
-        <button id="next-planet-btn">Next Planet (1 Million Energy)</button>
-        <button id="leaderboard-btn">Leaderboard</button>
-        <button id="info-btn">Spielregeln</button>
-        
-        <div id="leaderboard" class="hidden">
-            <h2>Leaderboard</h2>
-            <ul id="leaderboard-list"></ul>
-        </div>
-        
-        <div id="info" class="hidden">
-            <h2>Spielregeln</h2>
-            <p>Klicke auf den Planeten, um Energie zu sammeln...</p>
-        </div>
-    </div>
-    
-    <script src="script.js"></script>
+      </section>
+
+      <!-- Steuerungsbuttons -->
+      <section id="control-panel">
+        <button id="shop-button" onclick="toggleShop()">SHOP</button>
+        <button id="planet-change-button" onclick="changePlanet()">⬅ PLANET ➡</button>
+        <button id="leaderboard-button" onclick="toggleLeaderboard()">LEADERBOARD</button>
+        <button id="info-button" onclick="toggleInfo()">INFO</button>
+      </section>
+    </main>
+
+    <!-- Shop-Menü: Enthält alle Upgrades -->
+    <aside id="shop-menu" class="hidden">
+      <header class="panel-header">
+        <h2>Upgrades</h2>
+      </header>
+      <div id="upgrades-container">
+        <!-- Dynamisch generierte Upgrade-Buttons kommen hier rein -->
+      </div>
+      <footer class="panel-footer">
+        <button id="close-shop" onclick="toggleShop()">Schließen</button>
+      </footer>
+    </aside>
+
+    <!-- Leaderboard-Bereich -->
+    <aside id="leaderboard" class="hidden">
+      <header class="panel-header">
+        <h2>Highscores</h2>
+      </header>
+      <div id="leaderboard-content">
+        <ul id="leaderboard-list">
+          <!-- Dynamische Liste der Highscores -->
+        </ul>
+      </div>
+      <footer class="panel-footer">
+        <button onclick="toggleLeaderboard()">Schließen</button>
+      </footer>
+    </aside>
+
+    <!-- Info-Bereich: Spielregeln -->
+    <aside id="info" class="hidden">
+      <header class="panel-header">
+        <h2>Spielregeln</h2>
+      </header>
+      <div id="rules-content">
+        <p>
+          Willkommen bei Galactic Clicker! Klicke auf den Planeten, um Energie zu sammeln. Kaufe im Shop verschiedene Upgrades, 
+          die deine Energieproduktion erhöhen. Wechsle den Planeten, um neue Herausforderungen und weitere Upgrades freizuschalten. 
+          Vergleiche deine Highscores im Leaderboard und informiere dich hier über die Spielregeln. Viel Spaß im intergalaktischen 
+          Abenteuer!
+        </p>
+      </div>
+      <footer class="panel-footer">
+        <button onclick="toggleInfo()">Schließen</button>
+      </footer>
+    </aside>
+  </div>
 </body>
 </html>

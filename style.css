@@ -1,37 +1,76 @@
 body {
-    margin: 0;
-    overflow: hidden;
-    background-color: #70c5ce;
-}
-
-#game {
-    position: relative;
-    width: 400px;
-    height: 600px;
-    margin: auto;
-    border: 2px solid #000;
-}
-
-#bird {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: yellow;
-    border-radius: 50%;
-    top: 50%;
-    left: 50px;
-}
-
-.pipe {
-    position: absolute;
-    width: 50px;
-    background-color: green;
-}
-
-#score {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 24px;
+    background-color: black;
     color: white;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#energy-counter {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#planet-container {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#planet {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+}
+
+#planet:active {
+    transform: scale(1.1);
+}
+
+button {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
+
+#leaderboard, #info {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border: 2px solid white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    text-align: center;
+}
+
